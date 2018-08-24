@@ -1,0 +1,14 @@
+ASNACN_DIR: dataview/
+INSTALLED_TYPES_DIR: installed_types/
+PROJECT_NAME: demonstrator-planetary_exploration
+deps:
+- types/base: ''
+- types/base_support: ''
+- plex/blsclient: ''
+- types/controldev: ''
+- drivers/taste/controldev:
+- tools/dispatchers:
+- gr740/candriver: ''
+- tools/data_logger_components: ''
+- plex/pose_visualisation: ''
+#- types/vizkit3d: ''

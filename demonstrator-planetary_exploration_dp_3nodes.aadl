@@ -1,0 +1,286 @@
+---------------------------------------------------
+-- AADL2.1
+-- TASTE type deploymentview
+-- 
+-- generated code: do not edit
+---------------------------------------------------
+
+PACKAGE deploymentview::DV::remote_control_pc
+PUBLIC
+
+WITH ocarina_buses;
+WITH ocarina_drivers;
+WITH Taste;
+WITH Deployment;
+WITH TASTE_DV_Properties;
+PROCESS remote_control
+END remote_control;
+
+PROCESS IMPLEMENTATION remote_control.others
+END remote_control.others;
+
+DEVICE generic_sockets_ip_pohic
+EXTENDS ocarina_drivers::generic_sockets_ip
+FEATURES
+  link : REFINED TO REQUIRES BUS ACCESS ocarina_buses::ip.i {
+    Taste::coordinates => "105667 98686";
+  };
+PROPERTIES
+  Taste::Interface_Coordinates => "115461 131304" APPLIES TO link;
+  Deployment::Help => "Write your ASN.1 configuration here";
+  Deployment::Configuration => "{devname ""enp0s3"", address ""192.168.0.56"", port 5116}";
+  Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
+  Deployment::Version => "0.1beta";
+END generic_sockets_ip_pohic;
+
+DEVICE IMPLEMENTATION generic_sockets_ip_pohic.others
+EXTENDS ocarina_drivers::generic_sockets_ip.pohic
+END generic_sockets_ip_pohic.others;
+
+END deploymentview::DV::remote_control_pc;
+
+PACKAGE deploymentview::DV::cots_linux_obc
+PUBLIC
+
+WITH ocarina_buses;
+WITH ocarina_drivers;
+WITH Taste;
+WITH Deployment;
+WITH TASTE_DV_Properties;
+PROCESS on_board_control
+END on_board_control;
+
+PROCESS IMPLEMENTATION on_board_control.others
+END on_board_control.others;
+
+DEVICE generic_sockets_ip_pohic
+EXTENDS ocarina_drivers::generic_sockets_ip
+FEATURES
+  link : REFINED TO REQUIRES BUS ACCESS ocarina_buses::ip.i {
+    Taste::coordinates => "160310 98108";
+  };
+PROPERTIES
+  Taste::Interface_Coordinates => "160033 118233" APPLIES TO link;
+  Deployment::Help => "Write your ASN.1 configuration here";
+  Deployment::Configuration => "{devname ""enp0s3"", address ""192.168.0.9"", port 5116}";
+  Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
+  Deployment::Version => "0.1beta";
+END generic_sockets_ip_pohic;
+
+DEVICE IMPLEMENTATION generic_sockets_ip_pohic.others
+EXTENDS ocarina_drivers::generic_sockets_ip.pohic
+END generic_sockets_ip_pohic.others;
+
+END deploymentview::DV::cots_linux_obc;
+
+PACKAGE deploymentview::DV::GR740
+PUBLIC
+
+WITH ocarina_buses;
+WITH ocarina_drivers;
+WITH Taste;
+WITH Deployment;
+WITH TASTE_DV_Properties;
+PROCESS gr740_partition
+END gr740_partition;
+
+PROCESS IMPLEMENTATION gr740_partition.others
+END gr740_partition.others;
+
+DEVICE leon_ethernet_greth
+EXTENDS ocarina_drivers::leon_ethernet
+FEATURES
+  link : REFINED TO REQUIRES BUS ACCESS ocarina_buses::ip.i {
+    Taste::coordinates => "227553 98265";
+  };
+PROPERTIES
+  Taste::Interface_Coordinates => "212061 130359" APPLIES TO link;
+  Deployment::Help => "Write your ASN.1 configuration here";
+  Deployment::Configuration => "{devname ""greth1"", address ""192.168.0.42"", gateway ""192.168.0.1"", netmask ""255.255.255.0"", version ipv4, port 5118 }";
+  Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
+  Deployment::Version => "0.1beta";
+END leon_ethernet_greth;
+
+DEVICE IMPLEMENTATION leon_ethernet_greth.others
+EXTENDS ocarina_drivers::leon_ethernet.greth
+END leon_ethernet_greth.others;
+
+END deploymentview::DV::GR740;
+
+PACKAGE deploymentview::DV
+PUBLIC
+
+WITH interfaceview::IV::controldevice;
+WITH interfaceview::IV::JoystickCommandDispatcher;
+WITH interfaceview::IV::joystick_2_joint_commands;
+WITH interfaceview::IV::joystick_2_motion_command;
+WITH interfaceview::IV::dump_joint_commands;
+WITH interfaceview::IV::motion_command2d_logger;
+WITH interfaceview::IV::MotionCommandDispatcher;
+WITH interfaceview::IV::vizkit3drobotpose;
+WITH ocarina_processors_x86;
+WITH deploymentview::DV::remote_control_pc;
+WITH interfaceview::IV::blsclient;
+WITH deploymentview::DV::cots_linux_obc;
+WITH interfaceview::IV::gr740_candriver;
+WITH ocarina_processors_leon;
+WITH deploymentview::DV::GR740;
+WITH ocarina_buses;
+WITH Taste;
+WITH Deployment;
+WITH interfaceview::IV;
+WITH TASTE_DV_Properties;
+SYSTEM remote_control_pc
+FEATURES
+  generic_sockets_ip_pohic_ip_i : REQUIRES BUS ACCESS ocarina_buses::ip.i;
+END remote_control_pc;
+
+SYSTEM IMPLEMENTATION remote_control_pc.others
+SUBCOMPONENTS
+  IV_controldevice : SYSTEM interfaceview::IV::controldevice::controldevice.others {
+    Taste::FunctionName => "controldevice";
+  };
+  IV_JoystickCommandDispatcher : SYSTEM interfaceview::IV::JoystickCommandDispatcher::JoystickCommandDispatcher.others {
+    Taste::FunctionName => "JoystickCommandDispatcher";
+  };
+  IV_joystick_2_joint_commands : SYSTEM interfaceview::IV::joystick_2_joint_commands::joystick_2_joint_commands.others {
+    Taste::FunctionName => "joystick_2_joint_commands";
+  };
+  IV_joystick_2_motion_command : SYSTEM interfaceview::IV::joystick_2_motion_command::joystick_2_motion_command.others {
+    Taste::FunctionName => "joystick_2_motion_command";
+  };
+  IV_dump_joint_commands : SYSTEM interfaceview::IV::dump_joint_commands::dump_joint_commands.others {
+    Taste::FunctionName => "dump_joint_commands";
+  };
+  IV_motion_command2d_logger : SYSTEM interfaceview::IV::motion_command2d_logger::motion_command2d_logger.others {
+    Taste::FunctionName => "motion_command2d_logger";
+  };
+  IV_MotionCommandDispatcher : SYSTEM interfaceview::IV::MotionCommandDispatcher::MotionCommandDispatcher.others {
+    Taste::FunctionName => "MotionCommandDispatcher";
+  };
+  IV_vizkit3drobotpose : SYSTEM interfaceview::IV::vizkit3drobotpose::vizkit3drobotpose.others {
+    Taste::FunctionName => "vizkit3drobotpose";
+  };
+  remote_control : PROCESS deploymentview::DV::remote_control_pc::remote_control.others {
+    Taste::coordinates => "92815 55170 122143 82255";
+    Deployment::Port_Number => 0;
+  };
+  x86_linux : PROCESSOR ocarina_processors_x86::x86.linux {
+    Taste::coordinates => "89148 47432 125808 84722";
+  };
+  generic_sockets_ip_pohic : DEVICE deploymentview::DV::remote_control_pc::generic_sockets_ip_pohic.others {
+    Taste::coordinates => "89604 87506 123461 98686";
+  };
+CONNECTIONS
+  generic_sockets_ip_pohic_ip_i_link : BUS ACCESS generic_sockets_ip_pohic_ip_i -> generic_sockets_ip_pohic.link;
+PROPERTIES
+  Taste::APLC_Binding => (reference (remote_control)) APPLIES TO IV_controldevice;
+  Taste::APLC_Binding => (reference (remote_control)) APPLIES TO IV_JoystickCommandDispatcher;
+  Taste::APLC_Binding => (reference (remote_control)) APPLIES TO IV_joystick_2_joint_commands;
+  Taste::APLC_Binding => (reference (remote_control)) APPLIES TO IV_joystick_2_motion_command;
+  Taste::APLC_Binding => (reference (remote_control)) APPLIES TO IV_dump_joint_commands;
+  Taste::APLC_Binding => (reference (remote_control)) APPLIES TO IV_motion_command2d_logger;
+  Taste::APLC_Binding => (reference (remote_control)) APPLIES TO IV_MotionCommandDispatcher;
+  Taste::APLC_Binding => (reference (remote_control)) APPLIES TO IV_vizkit3drobotpose;
+  Actual_Processor_Binding => (reference (x86_linux)) APPLIES TO remote_control;
+  Actual_Processor_Binding => (reference (x86_linux)) APPLIES TO generic_sockets_ip_pohic;
+END remote_control_pc.others;
+
+SYSTEM cots_linux_obc
+FEATURES
+  generic_sockets_ip_pohic_ip_i : REQUIRES BUS ACCESS ocarina_buses::ip.i;
+END cots_linux_obc;
+
+SYSTEM IMPLEMENTATION cots_linux_obc.others
+SUBCOMPONENTS
+  IV_blsclient : SYSTEM interfaceview::IV::blsclient::blsclient.others {
+    Taste::FunctionName => "blsclient";
+  };
+  on_board_control : PROCESS deploymentview::DV::cots_linux_obc::on_board_control.others {
+    Taste::coordinates => "145766 53806 175800 80968";
+    Deployment::Port_Number => 0;
+  };
+  x86_linux : PROCESSOR ocarina_processors_x86::x86.linux {
+    Taste::coordinates => "142012 46045 179554 84848";
+  };
+  generic_sockets_ip_pohic : DEVICE deploymentview::DV::cots_linux_obc::generic_sockets_ip_pohic.others {
+    Taste::coordinates => "142043 87714 179365 98108";
+  };
+CONNECTIONS
+  generic_sockets_ip_pohic_ip_i_link : BUS ACCESS generic_sockets_ip_pohic_ip_i -> generic_sockets_ip_pohic.link;
+PROPERTIES
+  Taste::APLC_Binding => (reference (on_board_control)) APPLIES TO IV_blsclient;
+  Actual_Processor_Binding => (reference (x86_linux)) APPLIES TO on_board_control;
+  Actual_Processor_Binding => (reference (x86_linux)) APPLIES TO generic_sockets_ip_pohic;
+END cots_linux_obc.others;
+
+SYSTEM GR740
+FEATURES
+  leon_ethernet_greth_ip_i : REQUIRES BUS ACCESS ocarina_buses::ip.i;
+END GR740;
+
+SYSTEM IMPLEMENTATION GR740.others
+SUBCOMPONENTS
+  IV_gr740_candriver : SYSTEM interfaceview::IV::gr740_candriver::gr740_candriver.others {
+    Taste::FunctionName => "gr740_candriver";
+  };
+  gr740_partition : PROCESS deploymentview::DV::GR740::gr740_partition.others {
+    Taste::coordinates => "207441 55444 242311 83378";
+    Deployment::Port_Number => 0;
+  };
+  gr740_rtems51_posix : PROCESSOR ocarina_processors_leon::gr740.rtems51_posix {
+    Taste::coordinates => "203082 47463 246670 85667";
+  };
+  leon_ethernet_greth : DEVICE deploymentview::DV::GR740::leon_ethernet_greth.others {
+    Taste::coordinates => "203774 88502 246135 98265";
+  };
+CONNECTIONS
+  leon_ethernet_greth_ip_i_link : BUS ACCESS leon_ethernet_greth_ip_i -> leon_ethernet_greth.link;
+PROPERTIES
+  Taste::APLC_Binding => (reference (gr740_partition)) APPLIES TO IV_gr740_candriver;
+  Actual_Processor_Binding => (reference (gr740_rtems51_posix)) APPLIES TO gr740_partition;
+  Actual_Processor_Binding => (reference (gr740_rtems51_posix)) APPLIES TO leon_ethernet_greth;
+END GR740.others;
+
+SYSTEM deploymentview
+END deploymentview;
+
+SYSTEM IMPLEMENTATION deploymentview.others
+SUBCOMPONENTS
+  remote_control_pc : SYSTEM remote_control_pc.others {
+    Taste::coordinates => "85038 41259 130863 102832";
+  };
+  cots_linux_obc : SYSTEM cots_linux_obc.others {
+    Taste::coordinates => "137634 41416 184562 101730";
+  };
+  GR740 : SYSTEM GR740.others {
+    Taste::coordinates => "197633 41731 252119 102202";
+  };
+  ip_i : BUS ocarina_buses::ip.i {
+    Taste::coordinates => "115461 118233 212061 144374";
+  };
+  interfaceview : SYSTEM interfaceview::IV::interfaceview.others;
+CONNECTIONS
+  Connection2 : BUS ACCESS ip_i -> remote_control_pc.generic_sockets_ip_pohic_ip_i {
+    Taste::coordinates => "105667 98686 105667 131304 115461 131304";
+  };
+  Connection3 : BUS ACCESS ip_i -> cots_linux_obc.generic_sockets_ip_pohic_ip_i {
+    Taste::coordinates => "160310 98108 160310 108170 160033 108170 160033 118233";
+  };
+  Connection1 : BUS ACCESS ip_i -> GR740.leon_ethernet_greth_ip_i {
+    Taste::coordinates => "227553 98265 227553 130359 212061 130359";
+  };
+PROPERTIES
+  Actual_Connection_Binding => (reference (ip_i)) APPLIES TO interfaceview.gr740_candriver_PI_commands_joystick_2_joint_commands_RI_joint_commands;
+  Actual_Connection_Binding => (reference (ip_i)) APPLIES TO interfaceview.dump_joint_commands_PI_commands_gr740_candriver_RI_samples;
+  Actual_Connection_Binding => (reference (ip_i)) APPLIES TO interfaceview.blsclient_PI_motion_command_MotionCommandDispatcher_RI_sample;
+  Actual_Connection_Binding => (reference (ip_i)) APPLIES TO interfaceview.vizkit3drobotpose_PI_updateRigidBodyState_blsclient_RI_rigidBodyState;
+END deploymentview.others;
+
+PROPERTIES
+  Taste::coordinates => "0 0 297000 210000";
+  Taste::version => "2.0";
+  Taste::interfaceView => "demonstrator-planetary_exploration_iv.aadl";
+  Taste::HWLibraries => ("../../tool-inst/share/ocarina/AADLv2/ocarina_components.aadl");
+END deploymentview::DV;
+
