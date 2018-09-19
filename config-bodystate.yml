@@ -10,8 +10,6 @@ widget:
 
 # Plugins
 plugins:
-
-
     - type: RigidBodyStateVisualization
       name: rbs
       modelPath: stim300.stl

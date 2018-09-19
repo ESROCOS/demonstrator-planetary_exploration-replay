@@ -1,3 +1,0 @@
-ESROCOS-demonstrator-planetary-exploration DEFINITIONS ::= BEGIN
-    MyDummyInteger[]
-END

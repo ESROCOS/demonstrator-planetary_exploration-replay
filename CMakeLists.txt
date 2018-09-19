@@ -35,7 +35,13 @@ esrocos_add_dependency(PARTITION remote_control
                        MODULES   controldev eigen3 plex-pose_visualisation data_logger)
 
 esrocos_add_dependency(PARTITION on_board_control
-                       MODULES   eigen3 base_support)
+                       MODULES   eigen3 base_support mc_watchdog_bip plex-bridget)
+
+esrocos_add_dependency(PARTITION on_board_perception
+                       MODULES   eigen3 base_support opencv aruco)
+
+esrocos_add_dependency(PARTITION gr740_partition
+                       MODULES   eigen3)
 
 ########### FOR COMPONENT PROJECTS ################
 
