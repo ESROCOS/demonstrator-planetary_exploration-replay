@@ -687,8 +687,6 @@ PROPERTIES
 END PI_pan_tilt.others;
 
 SUBPROGRAM PI_clock
-PROPERTIES
-  Taste::Associated_Queue_Size => 1;
 END PI_clock;
 
 SUBPROGRAM IMPLEMENTATION PI_clock.others
@@ -753,7 +751,7 @@ FEATURES
   PI_clock : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::blsclient::PI_clock.others {
     Taste::coordinates => "202556 85390";
     Taste::RCMoperationKind => cyclic;
-    Taste::RCMperiod => 200 ms;
+    Taste::RCMperiod => 100 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "clock";
   };
@@ -1018,7 +1016,7 @@ END PI_trigger.others;
 
 SUBPROGRAM RI_sample
 FEATURES
-  sample : IN PARAMETER DataView::Base_commands_Motion2D {
+  cmd_val : IN PARAMETER DataView::Base_commands_Motion2D {
     Taste::encoding => NATIVE;
   };
 END RI_sample;
@@ -1076,7 +1074,7 @@ END PI_dispatch.others;
 
 SUBPROGRAM RI_sample
 FEATURES
-  sample : IN PARAMETER DataView::JoystickCommand {
+  cmd : IN PARAMETER DataView::JoystickCommand {
     Taste::encoding => NATIVE;
   };
 END RI_sample;
@@ -1086,7 +1084,7 @@ END RI_sample.others;
 
 SUBPROGRAM RI_sample1
 FEATURES
-  sample : IN PARAMETER DataView::JoystickCommand {
+  cmd : IN PARAMETER DataView::JoystickCommand {
     Taste::encoding => NATIVE;
   };
 END RI_sample1;
